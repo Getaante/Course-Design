@@ -1,0 +1,85 @@
+@startuml
+
+package "People" #DDDDDD{
+class Student {
+  + studentid:int
+  string id
+  + name: String
+  + getStudentId()
+  + getName()
+  + enroll(in Course, Course)
+
+}
+class Lecturer {
+  + name: String
+  string id
+  + listOfCourse: linkedList
+  + getName()
+  + getEmailAddress()
+}
+  Abstract class People {
+  +name : String
+  +age : int
+  {static} String id
+  +address: String
+  +getName: String
+  +getEmailAddress:String
+}
+    People <|-- Student
+    People <|-- Lecturer
+
+
+}
+
+class Assessment << (S,Orchid)>> {
+  + midTermExam: <Undefined>
+  + finalExam:<Undefined>
+
+}
+
+enum Section {
+  hybridCourse
+  standardCourse
+  onlineCourse
+  }
+
+
+
+Student "1" *-- "0..10" Graduate : taken by
+Lecturer "1" *-- "0..3" Graduate : taught by
+Student "1" *-- "0..10" Undergraduate : taken by
+Lecturer "1" *-- "0..3" Undergraduate : taught by
+
+
+namespace Undergraduate {
+class Course {
+-Course_assignment: Assignment
+-Course_assessment: Assessment
+-courseID: Int
+-courseName: String
+-Section_Number: Section
++add()
++remove()
++modify()
+  }
+} 
+namespace Graduate {
+class Course {
+-Course_assignment: Assignment
+-Course_assessment: Assessment
+-courseID: Int
+-courseName: String
+-Section_Number: Section
++add()
++remove()
++modify()
+}
+}
+
+
+Section -- Graduate
+Section -- Undergraduate
+Assessment -- Graduate
+Assessment -- Undergraduate
+
+@enduml
